@@ -4,13 +4,18 @@ set -euo pipefail
 echo "🚀 Bootstrap MicroK8s Cluster"
 
 echo "🔧 Loading environment config..."
-
 : "${VAULT_ID:?VAULT_ID not set}"
 : "${OCI_REGION:?OCI_REGION not set}"
+
+echo "🧬 Injecting environment variables..."
+find . -name "*.yaml" -o -name "*.yml" | while read f; do
+  envsubst < "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+done
 
 ############################
 # Flush iptables for MicroK8s
 ############################
+echo "🧹 Flushing iptables..."
 sudo iptables -F
 sudo iptables -X
 sudo iptables -t nat -F
