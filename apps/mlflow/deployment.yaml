@@ -48,7 +48,7 @@ spec:
                   key: OCI_S3_ENDPOINT
 
             - name: AWS_DEFAULT_REGION
-              value: eu-frankfurt-1
+              value: ${OCI_REGION}
 
             - name: MLFLOW_BACKEND_STORE_URI
               valueFrom:
