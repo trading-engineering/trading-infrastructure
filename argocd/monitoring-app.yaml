@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/bxvtr/trading-infra
+    repoURL: https://github.com/bxvtr/trading-infrastructure
     targetRevision: main
     path: apps/monitoring
 

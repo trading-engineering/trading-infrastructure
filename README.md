@@ -169,7 +169,7 @@ scripts/
 > For changes use ArgoCD/GitOps.
 
 ```bash
-cd trading-infra/
+cd trading-infrastructure/
 chmod +x scripts/bootstrap-cluster.sh
 ./scripts/bootstrap-cluster.sh
 ```
