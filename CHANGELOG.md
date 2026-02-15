@@ -13,6 +13,17 @@ The format is based on Keep a Changelog and follows Semantic Versioning.
 - PostgreSQL, MLflow, Monitoring stack
 - Scratch persistent storage model
 
+## [0.2.0] - Environment-based bootstrap configuration
+
+### Added
+- .env-driven cluster bootstrap configuration
+- automatic injection of cloud-specific values into manifests
+- example environment file for reproducible setup
+
+### Changed
+- removed hardcoded OCI Vault identifiers from manifests
+- bootstrap process now validates required environment variables
+
 ## [Unreleased]
 - CI validation pipelines
 - Multi-node support
