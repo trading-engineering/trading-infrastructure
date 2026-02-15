@@ -74,7 +74,30 @@ scripts/
 - This repository cloned onto the VM
 - OCI Vault + predefined secrets
 
-### 2️⃣ Bootstrap the Cluster
+### 2️⃣ Environment Configuration
+
+Before bootstrapping the cluster, create a `.env` file in the repository root:
+
+```bash
+cp .env.example .env
+```
+
+Set the required values:
+
+```env
+VAULT_ID=ocid1.vault.oc1.eu-frankfurt-1.xxxxx
+OCI_REGION=eu-frankfurt-1
+```
+
+Load the environment and run bootstrap:
+
+```bash
+set -a
+source .env
+set +a
+```
+
+### 3️⃣ Bootstrap the Cluster
 
 > ⚠ Bootstrap script is one-shot only.
 > Run on [fresh VM](#-full-reset).
@@ -82,7 +105,6 @@ scripts/
 > For changes use ArgoCD/GitOps.
 
 ```bash
-cd trading-infrastructure/
 chmod +x scripts/bootstrap-cluster.sh
 ./scripts/bootstrap-cluster.sh
 ```
