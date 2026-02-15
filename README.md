@@ -37,93 +37,6 @@ This repository provisions cloud infrastructure for a complete quantitative rese
 
 ---
 
-## 💾 Storage Model
-
-This platform uses a simple and explicit local storage layout:
-
-#### Boot Volume (VM Root Disk)
-
-- ~47 GB (minimum OCI size)
-- Hosts:
-  - Operating system
-  - Kubernetes system data
-  - PostgreSQL database (MLflow metadata)
-
-MLflow persists all experiment metadata in the local PostgreSQL instance backed by the VM boot volume.
-
-#### Scratch Block Volume
-
-- 153 GB (≈142.5 GiB, due to GB/GiB unit difference)
-- Mounted at:
-
-```
-/mnt/scratch
-```
-
-Intended for short-lived and data-heavy workloads:
-
-- Backtesting data
-- Research artifacts
-- Large intermediate datasets
-
-Exposed to Kubernetes via PersistentVolume/PersistentVolumeClaim.
-
-⚠ Single-node only (`hostPath` based).
-
----
-
-## 📊 Monitoring Persistence
-
-Prometheus runs with **ephemeral local storage by default**.
-
-- Metrics are stored inside the Prometheus pod filesystem
-- No PersistentVolume is configured
-- Data is lost on pod restart or node reboot
-
-This is intentional for lightweight research infrastructure and can be extended with persistent storage if long-term metrics retention is required.
-
----
-
-## 🔐 OCI Secrets Integration (Required)
-
-This platform depends on OCI Vault for all sensitive configuration.
-
-Requirements:
-
-- OCI Vault must exist
-- Secrets must be created in advance
-- Secret names must match the values referenced in Helm/YAML files
-
-Secrets are retrieved using:
-
-- Secrets Store CSI Driver
-- OCI Provider (custom multi-arch image)
-- Instance Principal authentication
-
-Secrets are defined via `SecretProviderClass` in application directories.
-
-No secrets are stored in Git.
-
----
-
-## ☁️ Why Oracle Cloud Infrastructure?
-
-OCI is used primarily for its generous ARM free tier:
-
-- 4 vCPU ARM VM
-- 24 GB RAM
-- ~200 GB free storage (boot + block volume)
-
-This makes it ideal for:
-
-- Single-node Kubernetes research clusters
-- Persistent external storage
-- Zero-cost experimentation
-
-The VM boot volume is kept minimal (~47 GB) while all data-heavy workloads use the attached scratch block volume.
-
----
-
 ## 📁 Repository Structure
 
 ```
@@ -226,24 +139,104 @@ No manual kubectl required.
 
 ---
 
-## 🔁 Reusing Scratch Block Storage
+## 💾 Storage Model
 
-#### Old VM
+This platform uses a simple and explicit local storage layout:
 
-```bash
-sudo microk8s kubectl delete namespace scratch
-sudo microk8s kubectl delete pv scratch-pv
-sudo umount /mnt/scratch
+#### Boot Volume (VM Root Disk)
+
+- ~47 GB (minimum OCI size)
+- Hosts:
+
+  - Operating system
+  - Kubernetes system data
+  - PostgreSQL database (MLflow metadata)
+
+MLflow persists all experiment metadata in the local PostgreSQL instance backed by the VM boot volume.
+
+#### Scratch Block Volume
+
+- 153 GB (≈142.5 GiB, due to GB/GiB unit difference)
+- Mounted at:
+
+```
+/mnt/scratch
 ```
 
-Detach volume.
+Intended for short-lived and data-heavy workloads:
 
-#### New VM
+- Backtesting data
+- Research artifacts
+- Large intermediate datasets
 
-1. Attach volume to same device name
-2. Run bootstrap
-3. PV/PVC names must match
-4. Data reused automatically
+Exposed to Kubernetes via PersistentVolume/PersistentVolumeClaim.
+
+⚠ Single-node only (`hostPath` based).
+
+---
+
+## 📊 Monitoring Persistence
+
+Prometheus runs with **ephemeral local storage by default**.
+
+- Metrics are stored inside the Prometheus pod filesystem
+- No PersistentVolume is configured
+- Data is lost on pod restart or node reboot
+
+This is intentional for lightweight research infrastructure and can be extended with persistent storage if long-term metrics retention is required.
+
+### ⚠ Storage Monitoring
+
+Because metrics are stored locally, regular disk usage checks are recommended to avoid unexpected storage exhaustion.
+
+Example commands:
+
+```bash
+df -h /
+sudo du -h --max-depth=1 /var/snap/microk8s/common/var
+```
+
+These help track overall disk space and identify directories consuming the most storage.
+
+---
+
+## 🔐 OCI Secrets Integration (Required)
+
+This platform depends on OCI Vault for all sensitive configuration.
+
+Requirements:
+
+- OCI Vault must exist
+- Secrets must be created in advance
+- Secret names must match the values referenced in Helm/YAML files
+
+Secrets are retrieved using:
+
+- Secrets Store CSI Driver
+- OCI Provider (custom multi-arch image)
+- Instance Principal authentication
+
+Secrets are defined via `SecretProviderClass` in application directories.
+
+No secrets are stored in Git.
+
+---
+
+## ☁️ Why Oracle Cloud Infrastructure?
+
+OCI is used primarily for its generous ARM free tier:
+
+- 4 vCPU ARM VM
+- 24 GB RAM
+- ~200 GB free storage (boot + block volume)
+
+This makes it ideal for:
+
+- Single-node Kubernetes research clusters
+- Persistent external storage
+- Zero-cost experimentation
+
+The VM boot volume is kept minimal (~47 GB) while all data-heavy workloads use the attached scratch block volume.
 
 ---
 
@@ -265,6 +258,27 @@ Detach volume.
 - No imperative workflows
 - multi-arch native
 - Minimal but production-grade
+
+---
+
+## 🔁 Reusing Scratch Block Storage
+
+#### Old VM
+
+```bash
+sudo microk8s kubectl delete namespace scratch
+sudo microk8s kubectl delete pv scratch-pv
+sudo umount /mnt/scratch
+```
+
+Detach volume.
+
+#### New VM
+
+1. Attach volume to same device name
+2. Run bootstrap
+3. PV/PVC names must match
+4. Data reused automatically
 
 ---
 
