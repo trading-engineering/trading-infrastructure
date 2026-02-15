@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and follows Semantic Versioning.
 
-## [0.1.0] - Initial release
+## [1.0.0] - Initial release
 
 ### Added
 - MicroK8s bootstrap automation
@@ -13,7 +13,7 @@ The format is based on Keep a Changelog and follows Semantic Versioning.
 - PostgreSQL, MLflow, Monitoring stack
 - Scratch persistent storage model
 
-## [0.2.0] - Environment-based bootstrap configuration
+## [1.1.0] - Environment-based bootstrap configuration
 
 ### Added
 - .env-driven cluster bootstrap configuration
