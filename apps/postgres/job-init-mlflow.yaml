@@ -1,0 +1,88 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-mlflow-postgres
+  namespace: postgres
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: init-db
+          image: postgres:14
+
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+
+            - name: MLFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: MLFLOW_DB
+
+            - name: MLFLOW_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: MLFLOW_USER
+
+            - name: MLFLOW_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: MLFLOW_PASSWORD
+
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+
+              echo "Waiting for PostgreSQL..."
+              until pg_isready -h postgres -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do
+                sleep 2
+              done
+
+              echo "Creating MLflow role if not exists..."
+              psql -h postgres -U "$POSTGRES_USER" -d postgres <<EOF
+              DO \$\$
+              BEGIN
+                IF NOT EXISTS (
+                  SELECT 1 FROM pg_roles WHERE rolname = '${MLFLOW_USER}'
+                ) THEN
+                  CREATE ROLE ${MLFLOW_USER}
+                    LOGIN PASSWORD '${MLFLOW_PASSWORD}';
+                END IF;
+              END
+              \$\$;
+              EOF
+
+              echo "Creating MLflow database if not exists..."
+              psql -h postgres -U "$POSTGRES_USER" -d postgres -tAc \
+                "SELECT 1 FROM pg_database WHERE datname = '${MLFLOW_DB}'" | grep -q 1 || \
+                createdb -h postgres -U "$POSTGRES_USER" "${MLFLOW_DB}"
+
+              echo "Setting ownership and privileges..."
+              psql -h postgres -U "$POSTGRES_USER" -d postgres <<EOF
+              ALTER DATABASE ${MLFLOW_DB} OWNER TO ${MLFLOW_USER};
+              GRANT ALL PRIVILEGES ON DATABASE ${MLFLOW_DB} TO ${MLFLOW_USER};
+              EOF
+
+              echo "MLflow database initialization complete"

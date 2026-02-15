@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: scratch-pv
+spec:
+  capacity:
+    storage: 142.5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""  # Must match the PVC
+  hostPath:
+    path: /mnt/scratch/data
+    type: DirectoryOrCreate

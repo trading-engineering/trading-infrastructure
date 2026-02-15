@@ -1,0 +1,12 @@
+server:
+  serviceType: NodePort
+  serviceNodePort: 32120
+  authMode: server
+
+controller:
+  serviceAccount:
+    create: false
+    name: argo-workflow-sa
+  workflowDefaults:
+    spec:
+      serviceAccountName: argo-workflow-sa

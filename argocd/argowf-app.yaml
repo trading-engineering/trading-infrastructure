@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argowf
+  namespace: default
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/bxvtr/trading-infra
+    targetRevision: main
+    path: apps/argowf
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argowf
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

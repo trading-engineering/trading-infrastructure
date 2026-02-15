@@ -1,0 +1,48 @@
+# ---- Prometheus ----
+prometheus:
+  service:
+    type: NodePort
+    nodePort: 30090
+
+  prometheusSpec:
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelector: {}
+    additionalScrapeConfigs:
+      - job_name: "pushgateway"
+        honor_labels: true
+        static_configs:
+          - targets:
+              - prometheus-pushgateway.monitoring.svc.cluster.local:9091
+
+
+# ---- Grafana ----
+grafana:
+  service:
+    type: NodePort
+    nodePort: 30007
+
+  admin:
+    existingSecret: prometheus-secret
+    userKey: GF_USER
+    passwordKey: GF_PASSWORD
+
+  extraVolumes:
+    - name: secrets-store-inline-prometheus
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "prometheus-secret-bundle"
+
+  extraVolumeMounts:
+    - name: secrets-store-inline-prometheus
+      mountPath: "/mnt/secrets-store/prometheus"
+      readOnly: true
+
+
+# ---- Prometheus Operator Flags ----
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+  tls:
+    enabled: false

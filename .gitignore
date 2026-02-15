@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+
+# Env / secrets
+.env
+*.env
+*.pem
+*.key
+*.crt
+
+# Kubernetes
+.kube/
+*.log
+
+# Terraform
+terraform.tfstate*
+*.tfvars
+
+# Helm
+charts/
+*.tgz
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+tmp/
