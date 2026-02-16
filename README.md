@@ -43,14 +43,14 @@ apps/
   mlflow/
   postgres/
   monitoring/
-  argowf/
+  argo/
   scratch/
 
 argocd/
   mlflow-app.yaml
   postgres-app.yaml
   monitoring-app.yaml
-  argowf-app.yaml
+  argo-app.yaml
   scratch-app.yaml
 
 infrastructure/

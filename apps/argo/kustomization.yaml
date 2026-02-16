@@ -10,5 +10,5 @@ helmCharts:
     repo: https://argoproj.github.io/argo-helm
     version: 0.47.1
     releaseName: argo
-    namespace: argowf
+    namespace: argo
     valuesFile: helm-values.yaml
