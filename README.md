@@ -22,8 +22,7 @@ This repository provisions cloud infrastructure for a complete quantitative rese
 
 - MicroK8s
 - Secrets Store CSI Driver
-- OCI Secrets Store Provider using a custom multi-arch image
-  (referenced in `./infrastructure/oci-provider/daemonset.yaml`)
+- OCI Secrets Store Provider using a [custom multi-arch image](https://github.com/trading-engineering/oci-secrets-store-csi-driver-provider/pkgs/container/oci-secrets-store-csi-driver-provider)
 - Argo CD
 - Scratch Block Volume formatting & mount
 
@@ -99,10 +98,10 @@ set +a
 
 ### 3️⃣ Bootstrap the Cluster
 
-> ⚠ Bootstrap script is one-shot only.
-> Run on [fresh VM](#-full-reset).
+> ⚠ The bootstrap script is one-shot only.
+> Run on a fresh VM or do a [full reset](#-full-reset).
 > Re-running on existing cluster is not supported.
-> For changes use ArgoCD/GitOps.
+> For changes use Argo CD / GitOps.
 
 ```bash
 chmod +x scripts/bootstrap-cluster.sh
@@ -215,7 +214,7 @@ Example commands:
 
 ```bash
 df -h /
-sudo du -h --max-depth=1 /var/snap/microk8s/common/var
+sudo du -h --max-depth=1 /var/snap/microk8s/common/var/
 ```
 
 These help track overall disk space and identify directories consuming the most storage.
@@ -290,7 +289,7 @@ The VM boot volume is kept minimal (~47 GB) while all data-heavy workloads use t
 ```bash
 sudo microk8s kubectl delete namespace scratch
 sudo microk8s kubectl delete pv scratch-pv
-sudo umount /mnt/scratch
+sudo umount /mnt/scratch/
 ```
 
 Detach volume.
@@ -308,8 +307,8 @@ Detach volume.
 
 ```bash
 sudo snap remove microk8s --purge
-sudo rm -rf /var/snap/microk8s
-sudo rm -rf ~/.kube
+sudo rm -rf /var/snap/microk8s/
+sudo rm -rf ~/.kube/
 ```
 
 ---
