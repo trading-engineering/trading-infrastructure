@@ -82,6 +82,7 @@ sudo microk8s helm repo update
 
 sudo microk8s helm install csi-secrets-store \
   secrets-store-csi-driver/secrets-store-csi-driver \
+  --version 1.4.8 \
   -n kube-system \
   --set syncSecret.enabled=true \
   --set enableSecretRotation=true
