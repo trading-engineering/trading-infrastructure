@@ -1,13 +1,20 @@
 # Contributing
 
-Thanks for your interest in contributing!
+Thank you for your interest in contributing!
 
-## Principles
+This repository focuses on cloud trading infrastructure.
+Contributions should preserve clarity, explicitness and reproducibility.
 
+## Design Principles
+
+- GitOps-first
 - No secrets in Git (ever)
 - Everything must be declarative
-- GitOps first — no manual kubectl workflows
 - Keep changes minimal and documented
+- Single source of truth
+- No imperative workflows
+- multi-arch native
+- Minimal but production-grade
 
 ## Workflow
 
