@@ -1,5 +1,7 @@
 # Trading Infrastructure – GitOps Kubernetes Stack (MicroK8s + Argo CD)
 
+![License](https://img.shields.io/badge/license-MIT-green)
+
 This repository provisions cloud infrastructure for a complete quantitative research & backtesting platform on a single-node MicroK8s cluster using GitOps via Argo CD in Oracle Cloud Infrastructure. The cluster is bootstrapped once and all Kubernetes workloads are managed declaratively via Argo CD.
 
 ---
@@ -11,7 +13,7 @@ This repository provisions cloud infrastructure for a complete quantitative rese
 - [PostgreSQL](https://www.postgresql.org) (metadata & experiment storage)
 - [MLflow](https://mlflow.org) (experiment tracking & model registry)
 - [Prometheus](https://prometheus.io) + [Grafana](https://grafana.com) (monitoring & observability)
-- [Argo Workflows](https://argoproj.github.io/workflows/) (batch & pipeline execution)
+- [Argo Workflows](https://argoproj.github.io/workflows) (batch & pipeline execution)
 - [Oracle Cloud Infrastructure](https://cloud.oracle.com) (compute, networking, secrets, storage)
 
 ---
