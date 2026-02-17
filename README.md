@@ -330,8 +330,19 @@ Fully reproducible. Fully declarative.
 
 ## 📌 Project Status
 
-- Operational: MicroK8s bootstrap, Argo CD GitOps layer, OCI secrets integration, PostgreSQL, scratch storage model  
-- Experimental / evolving: Monitoring stack, Argo Workflows pipelines, higher-level research workflows  
+**Operational**
+
+- MicroK8s bootstrap
+- Argo CD GitOps layer
+- OCI secrets integration
+- PostgreSQL
+- scratch storage model
+
+**Experimental**
+
+- Monitoring stack
+- Argo Workflows pipelines
+- higher-level research workflows
 
 ---
 
