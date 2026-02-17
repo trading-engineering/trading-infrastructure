@@ -63,7 +63,7 @@ scripts/
 
 ---
 
-## 🔧 Installation (Fresh VM)
+## 🚀 Quickstart (Fresh VM)
 
 ### 1️⃣ Requirements
 
@@ -196,6 +196,37 @@ Exposed to Kubernetes via PersistentVolume/PersistentVolumeClaim.
 
 ---
 
+### 🔁 Reusing Scratch Block Storage
+
+#### Old VM
+
+```bash
+sudo microk8s kubectl delete namespace scratch
+sudo microk8s kubectl delete pv scratch-pv
+sudo umount /mnt/scratch/
+```
+
+Detach volume.
+
+#### New VM
+
+1. Attach volume to same device name
+2. Run bootstrap
+3. PV/PVC names must match
+4. Data reused automatically
+
+---
+
+### 🧹 Full Reset
+
+```bash
+sudo snap remove microk8s --purge
+sudo rm -rf /var/snap/microk8s/
+sudo rm -rf ~/.kube/
+```
+
+---
+
 ## 📊 Monitoring Persistence
 
 Prometheus runs with **ephemeral local storage by default**.
@@ -263,12 +294,12 @@ The VM boot volume is kept minimal (~47 GB) while all data-heavy workloads use t
 
 ## 🔐 Security Model
 
+- No secrets in Git (ever)
 - Public VM with OCI firewall (NSGs / Security Lists)
 - Only SSH exposed
 - All service ports closed externally
 - Egress allowed
 - Secrets in OCI Vault
-- No secrets in Git
 
 ---
 
@@ -279,37 +310,6 @@ The VM boot volume is kept minimal (~47 GB) while all data-heavy workloads use t
 - No imperative workflows
 - multi-arch native
 - Minimal but production-grade
-
----
-
-## 🔁 Reusing Scratch Block Storage
-
-#### Old VM
-
-```bash
-sudo microk8s kubectl delete namespace scratch
-sudo microk8s kubectl delete pv scratch-pv
-sudo umount /mnt/scratch/
-```
-
-Detach volume.
-
-#### New VM
-
-1. Attach volume to same device name
-2. Run bootstrap
-3. PV/PVC names must match
-4. Data reused automatically
-
----
-
-## 🧹 Full Reset
-
-```bash
-sudo snap remove microk8s --purge
-sudo rm -rf /var/snap/microk8s/
-sudo rm -rf ~/.kube/
-```
 
 ---
 
@@ -325,3 +325,27 @@ Scratch volume for data
 ```
 
 Fully reproducible. Fully declarative.
+
+---
+
+## 📌 Project Status
+
+- Operational: MicroK8s bootstrap, Argo CD GitOps layer, OCI secrets integration, PostgreSQL, scratch storage model  
+- Experimental / evolving: Monitoring stack, Argo Workflows pipelines, higher-level research workflows  
+
+---
+
+## 👥 Who is this for?
+
+- Quant research & backtesting
+- GitOps Kubernetes experimentation
+- Reproducible infrastructure setups
+
+Not intended for multi-node production or managed platforms.
+
+---
+
+## 🏷️ Versioning
+
+This project follows the MIT license and semantic versioning.
+Initial public release: `v0.1.0`
