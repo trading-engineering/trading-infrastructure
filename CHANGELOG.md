@@ -2,9 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on Keep a Changelog and follows Semantic Versioning.
+The format is based on Keep a Changelog
+and this project adheres to Semantic Versioning.
 
-## [1.0.0] - Initial release
+## [Unreleased]
+
+---
+
+## [0.1.0] - 2026-02-17
 
 ### Added
 - MicroK8s bootstrap automation
@@ -12,10 +17,6 @@ The format is based on Keep a Changelog and follows Semantic Versioning.
 - OCI Vault integration via Secrets Store CSI Driver
 - PostgreSQL, MLflow, Monitoring stack
 - Scratch persistent storage model
-
-## [1.1.0] - Environment-based bootstrap configuration
-
-### Added
 - .env-driven cluster bootstrap configuration
 - automatic injection of cloud-specific values into manifests
 - example environment file for reproducible setup
@@ -23,8 +24,3 @@ The format is based on Keep a Changelog and follows Semantic Versioning.
 ### Changed
 - removed hardcoded OCI Vault identifiers from manifests
 - bootstrap process now validates required environment variables
-
-## [Unreleased]
-- CI validation pipelines
-- Multi-node support
-- Environment overlays
