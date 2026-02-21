@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring
+  name: scratch-prod
   namespace: argocd
 spec:
   project: default
@@ -9,11 +9,11 @@ spec:
   source:
     repoURL: https://github.com/trading-engineering/trading-infrastructure
     targetRevision: main
-    path: apps/monitoring
+    path: apps/scratch/prod
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: prod
 
   syncPolicy:
     automated:
