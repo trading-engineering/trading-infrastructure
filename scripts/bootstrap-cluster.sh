@@ -123,7 +123,7 @@ sudo microk8s kubectl apply --server-side --force-conflicts \
 
 echo "⏳ Waiting for ArgoCD components..."
 
-sudo microk8s kubectl rollout status deployment/argocd-application-controller -n default
+sudo microk8s kubectl rollout status statefulset/argocd-application-controller -n default
 sudo microk8s kubectl rollout status deployment/argocd-repo-server -n default
 sudo microk8s kubectl rollout status deployment/argocd-server -n default
 
