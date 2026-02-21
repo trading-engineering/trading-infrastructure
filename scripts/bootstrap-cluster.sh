@@ -141,4 +141,4 @@ sudo microk8s kubectl rollout restart deployment argocd-server -n default
 echo "🔗 Applying Argo Applications..."
 sudo microk8s kubectl apply -f ./argocd/
 
-echo "✅ Bootstrap Complete!"
+echo "### ✅ Bootstrap Complete! ###"

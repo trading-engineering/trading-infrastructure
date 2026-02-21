@@ -26,7 +26,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../
+  - ../../kustomization.yaml
 EOF
 
   if [ "${needs_vault}" = "true" ] || [ "${needs_region}" = "true" ]; then
