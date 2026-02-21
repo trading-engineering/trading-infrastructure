@@ -1,11 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "🚀 Bootstrap MicroK8s Cluster"
+echo "### 🚀 Bootstrap MicroK8s Cluster ###"
 
-echo "🔧 Loading environment config..."
-: "${VAULT_ID:?VAULT_ID not set}"
-: "${OCI_REGION:?OCI_REGION not set}"
+echo "🧩 Generating runtime overlays..."
+./scripts/generate-runtime-overlays.sh
 
 ############################
 # Flush iptables for MicroK8s
@@ -32,14 +31,6 @@ sudo microk8s enable dns
 sudo microk8s enable hostpath-storage
 sudo microk8s enable metrics-server
 sudo microk8s enable helm
-
-echo "🧩 Creating bootstrap config..."
-sudo microk8s kubectl create namespace postgres --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
-
-sudo microk8s kubectl -n postgres create configmap cluster-config \
-  --from-literal=VAULT_ID="$VAULT_ID" \
-  --from-literal=OCI_REGION="$OCI_REGION" \
-  --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
 
 ############################
 # Prepare Scratch Volume

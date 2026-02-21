@@ -14,17 +14,3 @@ helmCharts:
     namespace: monitoring
     valuesFile: helm-values.yaml
     includeCRDs: true
-
-replacements:
-  - source:
-      kind: ConfigMap
-      name: cluster-config
-      fieldPath: data.VAULT_ID
-    targets:
-      - select:
-          group: secrets-store.csi.x-k8s.io
-          version: v1
-          kind: SecretProviderClass
-          name: prometheus-secret-bundle
-        fieldPaths:
-          - spec.parameters.vaultId
