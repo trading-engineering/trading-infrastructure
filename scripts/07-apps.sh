@@ -6,6 +6,8 @@ set -euo pipefail
 ############################
 echo "🔗 Applying Argo Applications..."
 
+sudo microk8s kubectl create namespace argocd
+
 sudo microk8s kubectl apply -f ./argocd/
 
 until sudo microk8s kubectl -n default get application postgres >/dev/null 2>&1; do
