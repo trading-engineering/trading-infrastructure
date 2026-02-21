@@ -31,5 +31,3 @@ sudo chown -R 1000:1000 "$MOUNTPOINT/data"
 if ! grep -q "$DEVICE" /etc/fstab; then
   echo "$DEVICE $MOUNTPOINT ext4 defaults,nofail 0 2" | sudo tee -a /etc/fstab
 fi
-
-echo "✅ Scratch volume ready"

@@ -103,6 +103,6 @@ EOF
 # -------- Apps --------
 # inject_app <app_name> <spc_name> <deployment_name> <needs_vault> <needs_region>
 
-inject_app "postgres" "postgres-secret-bundle" "" true false
-inject_app "mlflow"   "mlflow-secret-bundle"   "mlflow" true true
+inject_app "postgres"   "postgres-secret-bundle"   "postgres"   true false
+inject_app "mlflow"     "mlflow-secret-bundle"     "mlflow"     true true
 inject_app "monitoring" "monitoring-secret-bundle" "monitoring" true false

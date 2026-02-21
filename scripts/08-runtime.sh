@@ -6,5 +6,3 @@ set -euo pipefail
 ############################
 echo "🔧 Injecting runtime values..."
 ./scripts/inject-runtime-values.sh
-
-echo "### ✅ Bootstrap Complete! ###"

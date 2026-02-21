@@ -19,5 +19,3 @@ sudo microk8s kubectl create -f $CRD_BASE/monitoring.coreos.com_prometheuses.yam
 sudo microk8s kubectl create -f $CRD_BASE/monitoring.coreos.com_alertmanagers.yaml
 sudo microk8s kubectl create -f $CRD_BASE/monitoring.coreos.com_servicemonitors.yaml
 sudo microk8s kubectl create -f $CRD_BASE/monitoring.coreos.com_podmonitors.yaml
-
-echo "✅ Prometheus CRDs installed"
