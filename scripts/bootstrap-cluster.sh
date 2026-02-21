@@ -114,35 +114,54 @@ echo "✅ Prometheus CRDs installed"
 ############################
 echo "🚀 Installing Argo CD..."
 
-# remove old CRDs just in case
 sudo microk8s kubectl delete crd applications.argoproj.io --ignore-not-found
 sudo microk8s kubectl delete crd appprojects.argoproj.io --ignore-not-found
 sudo microk8s kubectl delete crd applicationsets.argoproj.io --ignore-not-found
 
-# apply server-side
 sudo microk8s kubectl apply --server-side --force-conflicts \
   -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.0/manifests/install.yaml
 
+echo "⏳ Waiting for ArgoCD components..."
+
+sudo microk8s kubectl rollout status deployment/argocd-application-controller -n default
+sudo microk8s kubectl rollout status deployment/argocd-repo-server -n default
+sudo microk8s kubectl rollout status deployment/argocd-server -n default
+
 ############################
-# Enable Helm in Kustomize (CRITICAL)
+# Enable Helm in Kustomize
 ############################
-echo "🧩 Enabling Helm support for ArgoCD Kustomize..."
+echo "🧩 Enabling Helm support..."
 
 sudo microk8s kubectl patch configmap argocd-cm -n default \
   --type merge \
   -p '{"data":{"kustomize.buildOptions":"--enable-helm"}}'
 
-# Reload ArgoCD to pick up config
 sudo microk8s kubectl rollout restart deployment argocd-repo-server -n default
-sudo microk8s kubectl rollout restart deployment argocd-server -n default
 
-echo "🔧 Injecting runtime values..."
-./scripts/inject-runtime-values.sh
+sudo microk8s kubectl rollout status deployment/argocd-repo-server -n default
 
 ############################
 # Register Applications
 ############################
 echo "🔗 Applying Argo Applications..."
+
 sudo microk8s kubectl apply -f ./argocd/
+
+echo "⏳ Waiting for Applications to register..."
+
+until sudo microk8s kubectl -n default get application postgres >/dev/null 2>&1; do
+  sleep 2
+done
+
+until sudo microk8s kubectl -n default get application mlflow >/dev/null 2>&1; do
+  sleep 2
+done
+
+############################
+# Inject Runtime Values
+############################
+echo "🔧 Injecting runtime values..."
+
+./scripts/inject-runtime-values.sh
 
 echo "### ✅ Bootstrap Complete! ###"
