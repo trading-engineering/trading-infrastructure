@@ -3,14 +3,9 @@ set -euo pipefail
 
 echo "### 🚀 Bootstrap MicroK8s Cluster ###"
 
-
-
 echo "🔧 Loading environment config..."
 : "${VAULT_ID:?VAULT_ID not set}"
 : "${OCI_REGION:?OCI_REGION not set}"
-
-
-
 
 ############################
 # Flush iptables for MicroK8s
@@ -37,21 +32,6 @@ sudo microk8s enable dns
 sudo microk8s enable hostpath-storage
 sudo microk8s enable metrics-server
 sudo microk8s enable helm
-
-
-
-
-
-sudo microk8s kubectl create namespace postgres --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
-
-sudo microk8s kubectl create configmap cluster-config \
-  -n postgres \
-  --from-literal=VAULT_ID="${VAULT_ID}" \
-  --from-literal=OCI_REGION="${OCI_REGION}" \
-  --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
-
-
-
 
 ############################
 # Prepare Scratch Volume
@@ -155,6 +135,9 @@ sudo microk8s kubectl patch configmap argocd-cm -n default \
 # Reload ArgoCD to pick up config
 sudo microk8s kubectl rollout restart deployment argocd-repo-server -n default
 sudo microk8s kubectl rollout restart deployment argocd-server -n default
+
+echo "🔧 Injecting runtime values..."
+./scripts/inject-runtime-values.sh
 
 ############################
 # Register Applications
