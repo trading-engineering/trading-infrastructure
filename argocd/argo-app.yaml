@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/trading-engineering/trading-infrastructure
     targetRevision: fix/configmap
-    path: apps/argo/overlays/runtime
+    path: apps/argo
 
   destination:
     server: https://kubernetes.default.svc

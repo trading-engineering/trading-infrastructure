@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/trading-engineering/trading-infrastructure
     targetRevision: fix/configmap
-    path: apps/mlflow/overlays/runtime
+    path: apps/mlflow
 
   destination:
     server: https://kubernetes.default.svc

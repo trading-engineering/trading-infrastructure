@@ -5,3 +5,33 @@ resources:
   - secrets.yaml
   - deployment.yaml
   - service.yaml
+
+replacements:
+
+  # VAULT_ID → SecretProviderClass
+  - source:
+      kind: ConfigMap
+      name: cluster-config
+      fieldPath: data.VAULT_ID
+    targets:
+      - select:
+          group: secrets-store.csi.x-k8s.io
+          version: v1
+          kind: SecretProviderClass
+          name: mlflow-secret-bundle
+        fieldPaths:
+          - spec.parameters.vaultId
+
+  # OCI_REGION → Deployment Env
+  - source:
+      kind: ConfigMap
+      name: cluster-config
+      fieldPath: data.OCI_REGION
+    targets:
+      - select:
+          group: apps
+          version: v1
+          kind: Deployment
+          name: mlflow
+        fieldPaths:
+          - spec.template.spec.containers.[name=mlflow].env.[name=AWS_DEFAULT_REGION].value
