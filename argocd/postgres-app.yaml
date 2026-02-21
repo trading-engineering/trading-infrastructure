@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/trading-engineering/trading-infrastructure
-    targetRevision: fix/configmap
+    targetRevision: main
     path: apps/postgres
 
   destination:
