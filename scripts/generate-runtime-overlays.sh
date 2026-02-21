@@ -82,6 +82,6 @@ EOF
 
 # -------- define apps here --------
 
-create_runtime_overlay "postgres" "postgres" "postgres-secret-bundle" true "" "" false
+create_runtime_overlay "postgres" "postgres" "postgres-secret-bundle" true "postgres" "postgres" false
 create_runtime_overlay "mlflow" "mlflow" "mlflow-secret-bundle" true "mlflow" "mlflow" true
-create_runtime_overlay "monitoring" "monitoring" "" false "" "" false
+create_runtime_overlay "monitoring" "monitoring" "monitoring-secret-bundle" true "monitoring" "monitoring" false

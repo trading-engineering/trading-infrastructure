@@ -12,7 +12,7 @@ prometheus:
         honor_labels: true
         static_configs:
           - targets:
-              - prometheus-pushgateway.monitoring.svc.cluster.local:9091
+              - monitoring-pushgateway.monitoring.svc.cluster.local:9091
 
 
 # ---- Grafana ----
@@ -22,21 +22,21 @@ grafana:
     nodePort: 30007
 
   admin:
-    existingSecret: prometheus-secret
+    existingSecret: monitoring-secret
     userKey: GF_USER
     passwordKey: GF_PASSWORD
 
   extraVolumes:
-    - name: secrets-store-inline-prometheus
+    - name: secrets-store-inline-monitoring
       csi:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
-          secretProviderClass: "prometheus-secret-bundle"
+          secretProviderClass: "monitoring-secret-bundle"
 
   extraVolumeMounts:
-    - name: secrets-store-inline-prometheus
-      mountPath: "/mnt/secrets-store/prometheus"
+    - name: secrets-store-inline-monitoring
+      mountPath: "/mnt/secrets-store/monitoring"
       readOnly: true
 
 
