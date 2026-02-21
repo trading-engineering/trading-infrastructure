@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: prometheus-pushgateway
+  name: monitoring-pushgateway
   namespace: monitoring
 spec:
   selector:
-    app: prometheus-pushgateway
+    app: monitoring-pushgateway
   ports:
     - name: http
       port: 9091

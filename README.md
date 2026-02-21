@@ -158,12 +158,12 @@ set +a
 ### 3️⃣ Bootstrap the Cluster
 
 > ⚠ Bootstrap is one-shot only.
-> Run on a fresh VM or perform [full reset](#full-reset).
+> Run on a fresh VM or perform a [full reset](#full-reset).
 > Re-running on an existing cluster is not supported.
 > All subsequent changes must occur via GitOps.
 
 ```bash
-chmod +x scripts/bootstrap-cluster.sh
+chmod +x scripts/*
 ./scripts/bootstrap-cluster.sh
 ```
 
