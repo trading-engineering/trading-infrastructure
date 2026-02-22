@@ -1,10 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "🔧 Loading environment config..."
-: "${VAULT_ID:?VAULT_ID not set}"
-: "${OCI_REGION:?OCI_REGION not set}"
-
 ############################
 # Flush iptables for MicroK8s
 ############################
