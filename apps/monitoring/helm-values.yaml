@@ -12,7 +12,7 @@ prometheus:
         honor_labels: true
         static_configs:
           - targets:
-              - monitoring-pushgateway.monitoring.svc.cluster.local:9091
+              - prometheus-pushgateway.monitoring.svc.cluster.local:9091
 
 
 # ---- Grafana ----
