@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monitoring-pushgateway
+  name: prometheus-pushgateway
   namespace: monitoring
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: monitoring-pushgateway
+      app: prometheus-pushgateway
   template:
     metadata:
       labels:
-        app: monitoring-pushgateway
+        app: prometheus-pushgateway
     spec:
       containers:
         - name: pushgateway
