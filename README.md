@@ -98,26 +98,19 @@ argocd/
 ## 📁 Repository Structure
 
 ```
-apps/
-  mlflow/
-  postgres/
-  monitoring/
-  argo/
-  scratch/
-
-argocd/
-  mlflow-app.yaml
-  postgres-app.yaml
-  monitoring-app.yaml
-  argo-app.yaml
-  scratch-app.yaml
-
-infrastructure/
-  oci-provider/
-    provider.yaml
-
-scripts/
-  bootstrap-cluster.sh
+.
+├── apps/
+│   ├── argo/
+│   ├── mlflow/
+│   ├── monitoring/
+│   ├── postgres/
+│   └── scratch/
+├── argocd/
+├── infrastructure/
+│   └── oci-provider/
+├── scripts/
+├── CONTRIBUTING.md
+└── README.md
 ```
 
 ---
