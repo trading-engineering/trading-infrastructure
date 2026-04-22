@@ -60,7 +60,7 @@ Installed once via bootstrap script:
 
 - MicroK8s
 - Secrets Store CSI Driver
-- OCI Secrets Store Provider [custom multi-arch image](https://github.com/CanonicalFlow/oci-secrets-store-csi-driver-provider/pkgs/container/oci-secrets-store-csi-driver-provider)
+- OCI Secrets Store Provider [custom multi-arch image](https://github.com/TradingChassis/oci-secrets-store-csi-driver-provider/pkgs/container/oci-secrets-store-csi-driver-provider)
 - Argo CD
 - Scratch Block Volume formatting and mounting
 
