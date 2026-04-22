@@ -19,7 +19,7 @@ spec:
       serviceAccountName: oci-secrets-store-csi-driver-provider-sa
       containers:
         - name: oci-secrets-store-csi-driver-provider
-          image: ghcr.io/canonicalflow/oci-secrets-store-csi-driver-provider:latest
+          image: ghcr.io/tradingchassis/oci-secrets-store-csi-driver-provider:latest
           imagePullPolicy: Always
           args:
             - --endpoint=unix:///opt/provider/sockets/oci.sock

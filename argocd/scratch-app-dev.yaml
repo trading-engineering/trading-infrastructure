@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/CanonicalFlow/infrastructure
+    repoURL: https://github.com/TradingChassis/infrastructure
     targetRevision: main
     path: apps/scratch/dev
 
